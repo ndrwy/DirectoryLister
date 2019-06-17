@@ -18,7 +18,7 @@
         <script type="text/javascript" src="<?php echo THEMEPATH; ?>/js/directorylister.js"></script>
 
         <!-- FONTS -->
-        <link rel="stylesheet" type="text/css"  href="//fonts.googleapis.com/css?family=Cutive+Mono">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Inconsolata:400,700&display=swap"> 
 
         <!-- META -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -84,11 +84,22 @@
                 <?php endforeach; ?>
             <?php endif; ?>
 
+            <?php 
+            $link = 'dir=.';
+            if(isset($_GET['dir'])) {
+                $link = 'dir='.$_GET['dir'];
+            }
+            $order = 'order=asc';
+            if(isset($_GET['order']) && $_GET['order'] === 'asc'){
+                $order = 'order=desc';
+            }
+            ?>
+
             <div id="directory-list-header">
                 <div class="row">
-                    <div class="col-md-7 col-sm-6 col-xs-10">File</div>
-                    <div class="col-md-2 col-sm-2 col-xs-2 text-right">Size</div>
-                    <div class="col-md-3 col-sm-4 hidden-xs text-right">Last Modified</div>
+                    <a class="col-md-7 col-sm-6 col-xs-9" href="<?php echo $lister->GetBasePath(); ?>?<?php echo $link . '&by=name&'. $order ?>">File</a>
+                    <a class="col-md-2 col-sm-2 hidden-xs text-right" href="<?php echo $lister->GetBasePath(); ?>?<?php echo $link . '&by=size&'. $order ?>">Size</a>
+                    <a class="col-md-3 col-sm-4 col-xs-3 text-right" href="<?php echo $lister->GetBasePath(); ?>?<?php echo $link . '&by=lastModified&'. $order ?>">Last Modified</a>
                 </div>
             </div>
 
@@ -105,11 +116,11 @@
                                     <?php echo $name; ?>
                                 </span>
 
-                                <span class="file-size col-md-2 col-sm-2 col-xs-3 text-right">
+                                <span class="file-size col-md-2 col-sm-2 hidden-xs text-right">
                                     <?php echo $fileInfo['file_size']; ?>
                                 </span>
 
-                                <span class="file-modified col-md-3 col-sm-4 hidden-xs text-right">
+                                <span class="file-modified col-md-3 col-sm-4 col-xs-3 text-right">
                                     <?php echo $fileInfo['mod_time']; ?>
                                 </span>
                             </div>
